@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<div id="cadastro">
+    <h2 id="titulo-cadastro">Cadastro</h2>
+    {% with messages = get_flashed_messages() %}
+   
+    <form method="post" action="{{ url_for('auth.signup_post') }}">
+        <div>
+            <label for="nome" >Seu nome</label>
+            <input type="text" name="nome" id="nome" class="input-enviar">
+        </div>
+        <div>
+            <label for="email" >E-mail</label>
+            <input type="email" name="email" id="email" class="input-enviar">
+        </div>
+        
+        <div>
+            <label for="senha" >Senha</label>
+            <input type="password" name="senha" id="senha" placeholder="Pelo menos 6 caracteres" class="input-enviar">
+        </div>
+        <div>
+            <label for="senha_comparacao">Insira a senha mais uma vez</label>
+            <input type="password" name="senha_comparacao" id="senha_comparacao" class="input-enviar">
+        </div>
+        
+        <div class="mensagem-erro">
+            {% if messages %}
+            <img id="atencao" src="{{ url_for('static',filename='img/atencao.png') }}">{{ messages[0] }}.
+            {% endif %}
+        </div>
+        
+        <div class="botao-enviar-div">
+            <input type="submit" value="Continue" class="botao-enviar">
+        </div>
+    </form>
+    
+    {% endwith %}
+
+    <p>Você já tem uma conta? <a href="{{ url_for('auth.login') }}" class="link">Faça o login</a></p>
+</div>
+
+{% endblock %}

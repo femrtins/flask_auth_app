@@ -1,0 +1,267 @@
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Jost:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&display=swap');
+
+
+:root {
+    --main-bg-color: #f2e3d0;
+    --main-font-color: #292929;
+    --second-color: #F0C936;
+    --third-color: #535BB0;
+    --second-font-color: white;
+    --err-font: red;
+}
+
+* {
+    font-family: "Manrope", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body, html{
+    height: 100%;
+}
+
+#principal {
+    background-color: var(--main-bg-color);
+    height: 100%;
+    color: var(--main-font-color);    
+}
+
+main {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#box-centralizar {
+    width: 100%;
+    height: 300px;
+}
+
+form#home{
+    justify-content: center;
+    display: flex;
+}
+
+#recomendacao {
+    background-color: white;
+    width: 650px;
+    height: 75px;
+    resize: none;
+    border: solid 1px var(--second-font-color);
+    border-radius: 4px;
+    padding: 12px 20px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+#recomendacao:focus{
+    border: solid 1px var(--second-color);
+    /* box-shadow: 0 2px 6px rgba(3, 252, 219, 0.5); */
+}
+
+#botao-home {
+    height: 75px;
+    border: none;
+    border-radius: 4px;
+    margin-left: 10px;
+    width: 100px;
+    font-weight: 700;
+    background-color: var(--second-color);
+    color: var(--main-font-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+#botao-home:active{
+    background-color: var(--main-font-color);
+    color: var(--second-color);
+}
+
+h2, p{
+    text-align: center;
+}
+
+h2{
+    font-size: 40px;
+}
+
+.marca-texto{
+    background-color: var(--second-color);
+    padding: 3px 2px !important;
+}
+
+/* Navbar */
+
+.container-fluid {
+    background-color: var(--main-bg-color) !important;
+    color: var(--main-font-color) !important;
+}
+
+#navbar-entrar, #navbar-sair{
+    padding: 10px 15px;
+    background-color: var(--third-color);
+    color: white;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+
+img{
+    height: 30px;
+}
+
+/* Rodapé */
+
+footer{
+    width: 100%;
+    height: 200px;
+    background-color: var(--second-color);
+    padding: 40px;
+}
+
+.txt-footer{
+    font-family: "EB Garamond", serif;
+    position: relative;
+    top: 40px;
+    margin: auto;
+    text-align: center;
+}
+
+/* Cadastro e Login */
+
+#cadastro, #login{
+    height: 530px;
+    width: 500px;
+    margin: auto;
+    background-color: var(--third-color);
+    padding: 20px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.4);
+    color: var(--second-font-color);
+    align-items: center;
+}
+
+label{
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.input-enviar{
+    width: 100%;
+    padding: 5px;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    margin-bottom: 10px;
+    background-color: var(--main-bg-color);
+}
+
+#titulo-cadastro, #titulo-login{
+    padding-top: 10px;
+}
+
+.botao-enviar-div{
+    height: 45px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.botao-enviar{
+    height: 45px;
+    width: 150px;
+    margin: auto;
+    background-color: #F0C936;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    font-weight: 500;
+}
+
+.link{
+    color: var(--second-color);
+    text-decoration: none;
+}
+
+#login{
+    height: 390px !important;
+    margin-top: 5%;
+}
+
+.mensagem-erro{
+    height: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: var(--second-font-color);
+    font-weight: 600;
+}
+
+#atencao{
+    height: 20px;
+    margin-right: 10px;
+}
+
+input[type="checkbox"]{
+
+    /* -webkit-appearance: none; */
+    background-color: var(--third-color);
+    border: solid 2px var(--main-bg-color);
+    border-radius: 2px;
+    width: 17px;
+    height: 17px;
+    margin-top: 2px;
+}
+
+input[type="checkbox"]:checked{
+    background-color: var(--main-bg-color);
+}
+
+.remember-div{
+    height: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#label-remember{
+    margin-right: 10px;
+}
+
+.login-page{
+    bottom: 0;
+    height: 45px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+}
+
+button#criar-cadastro{
+    width: 200px;
+    height: 40px;
+    border: solid 1px var(--third-color);
+    border-radius: 4px;
+    background-color: var(--main-bg-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    font-weight: 500;
+    font-size: 15px;
+}
+
+#p-login{
+    font-weight: 500;
+    font-size: 15px;
+    margin-top: 9px;
+    margin-right: 20px;
+    color: var(--main-font-color);
+    
+
+}
