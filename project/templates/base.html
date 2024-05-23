@@ -56,10 +56,12 @@
         </div>
 
         <!-- Rodapé -->
+        {% if not request.path.startswith('/signup') and not request.path.startswith('/login') %}
         <footer>
             <p class="txt-footer">Todos os direitos reservados</p>
             <p class="txt-footer">Criado por Fernanda & Monique</p>
         </footer>
+        {% endif %}
 
         <script src="{{ url_for('static',filename='js/script.js') }}"></script>
                     

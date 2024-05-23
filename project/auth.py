@@ -63,14 +63,14 @@ def signup_post():
     senha_confirmacao = request.form['senha_comparacao']
 
     user = User.query.filter_by(email=email).first()
-    username = User.query.filter_by(username=username).first()
+    user_n = User.query.filter_by(username=username).first()
 
     # Se o usuário não é encontrado, ele é redirecionado para a página de cadastro e recebe
     # a mensagem que o endereço de e-mail já exite
     if user: 
         flash('Esse e-mail já existe')
         return redirect(url_for('auth.signup'))
-    if username:
+    if user_n:
         flash('Esse nome de usuário já existe')
         return redirect(url_for('auth.signup'))
     

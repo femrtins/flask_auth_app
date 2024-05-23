@@ -2,11 +2,11 @@
 
 :root {
 	--main-bg-color: #f2e3d0;
-    --main-font-color: #292929;
-    --second-color: #F0C936;
+    --main-font-color: #353535;
+    --second-color: #ececec;
     --third-color: #535BB0;
     --second-font-color: white;
-    --err-font: red;
+    --err-font: #b3261e;
     --color-1: #9b9b9b34;
     --color-2: #474747;
 }
@@ -136,13 +136,12 @@ footer{
     height: 600px;
     width: 500px;
     margin: auto;
-    background-color: var(--third-color);
+    background-color: var(--second-font-color);
     padding: 20px;
     margin-top: 20px;
     margin-bottom: 50px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.4);
-    color: var(--second-font-color);
+    border-radius: 20px;
+    color: var(--main-font-color);
     align-items: center;
 }
 
@@ -153,13 +152,22 @@ label{
 
 .input-enviar{
     width: 100%;
-    padding: 5px;
+    padding: 7px;
     outline: none;
-    border: none;
+    border: 2px solid var(--color-1);
     border-radius: 4px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     margin-bottom: 5px;
-    background-color: var(--main-bg-color);
+    transition: .1s
+    /* background-color: var(--main-bg-color); */
+}
+
+.input-enviar:focus{
+    border: 2px solid var(--third-color);
+    color: var(--third-color)
+}
+
+.input-enviar:focus label{
+    color: var(--third-color);
 }
 
 #titulo-cadastro, #titulo-login{
@@ -180,16 +188,21 @@ label{
     height: 45px;
     width: 150px;
     margin: auto;
-    background-color: #F0C936;
+    background-color: var(--third-color);
     border: none;
-    border-radius: 4px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    border-radius: 30px;
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); */
+    color: var(--second-color);
     font-weight: 500;
 }
 
 .link{
-    color: var(--second-color);
+    color: var(--third-color);
     text-decoration: none;
+}
+
+#ja-tem-conta{
+    margin-top: 20px;
 }
 
 #login{
@@ -201,7 +214,7 @@ label{
     height: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
-    color: var(--second-font-color);
+    color: var(--err-font);
     font-weight: 600;
 }
 
