@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block titulo %}
+Cadastro
+{% endblock %}
+
 {% block conteudo %}
 <div id="cadastro">
     <h2 id="titulo-cadastro">Cadastro</h2>
@@ -7,21 +11,24 @@
    
     <form method="post" action="{{ url_for('auth.signup_post') }}">
         <div>
-            <label for="nome" >Seu nome</label>
-            <input type="text" name="nome" id="nome" class="input-enviar">
+            <label for="nome">Seu nome</label>
+            <input type="text" name="nome" id="nome" class="input-enviar" required>
+        </div>
+        <div>
+            <label for="user_name">Nome de usuário</label>
+            <input type="text" name="user_name" id="user_name" class="input-enviar" required>
         </div>
         <div>
             <label for="email" >E-mail</label>
-            <input type="email" name="email" id="email" class="input-enviar">
+            <input type="email" name="email" id="email" class="input-enviar" required>
         </div>
-        
         <div>
             <label for="senha" >Senha</label>
-            <input type="password" name="senha" id="senha" placeholder="Pelo menos 6 caracteres" class="input-enviar">
+            <input type="password" name="senha" id="senha" placeholder="Pelo menos 6 caracteres" class="input-enviar" required>
         </div>
         <div>
             <label for="senha_comparacao">Insira a senha mais uma vez</label>
-            <input type="password" name="senha_comparacao" id="senha_comparacao" class="input-enviar">
+            <input type="password" name="senha_comparacao" id="senha_comparacao" class="input-enviar" required>
         </div>
         
         <div class="mensagem-erro">
@@ -30,7 +37,7 @@
             {% endif %}
         </div>
         
-        <div class="botao-enviar-div">
+        <div class="botao-profile-div">
             <input type="submit" value="Continue" class="botao-enviar">
         </div>
     </form>

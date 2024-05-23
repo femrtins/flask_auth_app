@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, flash, redirect
 from flask_login import login_required, current_user
 from . import db
+from .models import User
 
 main = Blueprint('main', __name__)
 
@@ -12,3 +13,4 @@ def index():
 @login_required
 def profile():
     return render_template('profile.html', name=current_user.name)
+

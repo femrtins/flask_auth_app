@@ -1,7 +1,50 @@
 {% extends "base.html" %}
 
+{% block titulo %}
+Profile
+{% endblock %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static',filename='styles/style-profile.css') }}">
+{% endblock %}
+
 {% block conteudo %}
-<h1 class="title">
-  Welcome, {{ name }}!
-</h1>
+
+<div id="container">
+	<div id="profile-info">
+		<img src="{{ url_for('static',filename='img/foto.png') }}" id="profile-foto">
+		<h1 id="nome">{{name}}</h1>
+		<p id="bio">{{biography}}</p>
+		<button id="botao-editar-perfil">Editar Perfil</button>
+		<div id="editar-perfil">
+			<form method="POST" action="/edit_profile" id="edit-profile">
+				<div>
+					<label for="bio">Bio</label>
+					<textarea id="bio" name="bio" class="input-edit-profile" rows="4"></textarea>
+				</div>
+				<div>
+					<label for="nome">Seu nome</label>
+					<input type="text" name="nome" id="nome" class="input-edit-profile">
+				</div>
+				<div>
+					<label for="username">Nome de usuário</label>
+					<input type="text" name="username" id="username" class="input-edit-profile">
+				</div>			
+				<div>
+					<label for="photo" id="label-file">Mudar foto de perfil</label><br>
+					<input type="file" id="photo" name="photo" accept="image/*" class="input-edit-profile">
+				</div>	
+				<div class="botao-profile-div">
+					<input type="submit" value="Enviar" class="botao-profile">
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div id="profile-page">
+		<div id="profile-recomendacoes"><p>profile-recomendacoes</p></div>
+		<div id="profile-avaliacoes"><p>profile-avaliacoes</p></div>
+	</div>
+
+</div>          
 {% endblock %}
