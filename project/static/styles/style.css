@@ -40,12 +40,12 @@ main {
     height: 300px;
 }
 
-form#home{
+form#home, form#postar{
     justify-content: center;
     display: flex;
 }
 
-#recomendacao {
+#recomendacao, #post {
     background-color: white;
     width: 650px;
     height: 75px;
@@ -54,7 +54,7 @@ form#home{
     border-radius: 4px;
     padding: 12px 20px;
     outline: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); */
 }
 
 #recomendacao:focus{
@@ -62,7 +62,7 @@ form#home{
     /* box-shadow: 0 2px 6px rgba(3, 252, 219, 0.5); */
 }
 
-#botao-home {
+#botao-home, #botao-postar {
     height: 75px;
     border: none;
     border-radius: 4px;
@@ -196,6 +196,10 @@ label{
     font-weight: 500;
 }
 
+.capitalizar{
+    text-transform: capitalize;
+}
+
 .link{
     color: var(--third-color);
     text-decoration: none;
@@ -323,15 +327,15 @@ p#bio{
 }
 
 #profile-page{
-    background-color: var(--second-font-color);
+    /* background-color: var(--second-font-color); */
     height: 100%;
-    width: 800px;
+    width: 900px;
     padding: 10px;
     margin-right: 20px;
 }
 
 #profile-recomendacoes{
-    background-color: var(--third-color);
+    /* background-color: var(--third-color); */
     height: 500px;
     width: auto;
 }
@@ -389,13 +393,53 @@ input[type="file"] {
     font-size: 15px;
  }
 
- .botao-profile-div{
+.botao-profile-div{
 	display: flex;
 	justify-content: flex-end;
 	margin-top: 10px;
- }
+}
 
- #bio{
-	resize: none;
+#bio{
+    resize: none;
+}
 
- }
+#bio-paragrafo{
+    width: 100%;
+    text-align: left;
+}
+
+form#postar{
+    width: 100%;
+}
+
+textarea#post{
+    width: 800px;
+    height: 75px;
+    resize: none;
+}
+
+button#botao-postar{
+    height: 75px;
+}
+
+div.linha{
+    height: 20px;
+    width: 100%;
+    border-bottom: solid 2px white;
+}
+
+div#lista{
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: var(--main-font-color);
+}
+
+div.post-pedido{
+    width: 100%;
+    height: auto;
+    background-color: #cecece;
+    padding: 10px;
+}
+

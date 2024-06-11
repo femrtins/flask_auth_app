@@ -1,8 +1,10 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, send_file,jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from .models import User
+from .models import User, Post, Follow
 from flask_login import login_user, logout_user, login_required, current_user
 from . import db
+from datetime import datetime
+from io import BytesIO
 
 auth = Blueprint('auth', __name__)
 
@@ -31,7 +33,7 @@ def login_post():
 
     # Se os anteriores passarem manda o usuário para o seu perfil
     login_user(user, remember=remember)
-    return redirect(url_for('main.profile'))
+    return redirect(url_for('main.profile', username=user.username))
 
 @auth.route('/signup')
 def signup():
@@ -89,31 +91,105 @@ def signup_post():
 
     return redirect(url_for('auth.login'))
 
-@auth.route('/edit_profile', methods=['POST'])
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@auth.route('/edit_profile', methods=['GET','POST'])
 @login_required
 def edit_profile():
+    if request.method == 'POST':
 
-    bio = request.form['bio']
-    name = request.form['name']
-    username = request.form['username']
-    photo = request.form['photo']
+        bio = request.form.get('bio')
+        name = request.form.get('nome')
+        username = request.form.get('username')
+        photo = request.files.get('photo')
 
-    # Verifica se o novo email não pertence a outro usuário
-    if username != current_user.username and User.query.filter_by(username=username).first():
-        flash('Esse nome de usuário já está em uso.')
-        return redirect(url_for('profile'))
+        print(photo)
+        # Verifica se o novo email não pertence a outro usuário
+        if username != current_user.username and User.query.filter_by(username=username).first():
+            flash('Esse nome de usuário já está em uso.')
+            return redirect(url_for('auth.profile'))
 
-    # Atualiza as informações do usuário
-    if bio != "":
-        current_user.biograpy = bio
-    if name != "":   
-        current_user.name = name
-    if username != "":      
-        current_user.username = username
-    if photo != "":    
-        current_user.image_path = photo
+        # Atualiza as informações do usuário
+        if bio:
+            current_user.biography = bio
+        if name:   
+            current_user.name = name           
+        if username:      
+            current_user.username = username
+        if photo and allowed_file(photo.filename):
+            photo_bytes = photo.read()
+            current_user.image = photo_bytes
+        
+        # Salva as alterações no banco de dados
+        try:
+            db.session.commit()
+            flash('Informações do perfil atualizadas com sucesso!')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Ocorreu um erro ao atualizar o perfil: {str(e)}')
+    return redirect(url_for('main.profile', username=current_user.username))
 
-	# Salva as alterações no banco de dados
+@auth.route('/post', methods=['GET','POST'])
+@login_required
+def post():
+    if request.method == 'POST':
+        post_content = request.form.get('post')
+
+        if post_content:
+            new_post = Post(post=post_content, user_id=current_user.id, username=current_user.username) # Associar post ao usuário atual
+            db.session.add(new_post)
+            try:
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                flash(f'Ocorreu um erro ao criar o post: {str(e)}')
+                
+    return redirect(url_for('main.profile', username=current_user.username))
+
+@auth.route('/del_post/<int:post_id>', methods=['POST'])
+@login_required
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        flash('Você não tem permissão para excluir este post.')
+        return redirect(url_for('main.profile', username=current_user.username))  
+    try:
+        db.session.delete(post)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Ocorreu um erro ao excluir o post: {str(e)}')
+    
+    return redirect(url_for('main.profile', username=current_user.username))
+
+@auth.route('/user/image/<int:user_id>')
+def get_user_image(user_id):
+    user = User.query.get_or_404(user_id)
+    if not user.image:
+        # Se o usuário não tiver uma imagem, retorne uma imagem padrão ou uma mensagem de erro
+        return send_file('caminho_para_imagem_padrao.jpg')  # Substitua pelo caminho da sua imagem padrão
+    return send_file(BytesIO(user.image), mimetype='image/jpeg')
+
+@auth.route('/follow/<int:user_id>', methods=['POST'])
+@login_required
+def follow(user_id):
+    followed_user = User.query.get_or_404(user_id)    
+    if Follow.query.filter_by(follower_id=current_user.id, followed_id=followed_user.id).first():
+        return '', 204
+    follow = Follow(follower_id=current_user.id, followed_id=followed_user.id)
+    db.session.add(follow)
     db.session.commit()
-    flash('Informações do perfil atualizadas com sucesso!')
-    return redirect(url_for('editar_perfil'))
+    return '', 204
+
+# @auth.route('/unfollow/<int:user_id>', methods=['POST'])
+# @login_required
+# def unfollow_user(user_id):
+#     followed_user = User.query.get_or_404(user_id)
+#     follow = Follow.query.filter_by(follower_id=current_user.id, followed_id=followed_user.id).first()
+#     if follow:
+#         db.session.delete(follow)
+#         db.session.commit()
+#     return '', 204

@@ -6,3 +6,4 @@ document.getElementById('botao-editar-perfil').addEventListener('click', functio
         content.style.display = 'none';
     }
 });
+
