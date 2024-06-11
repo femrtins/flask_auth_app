@@ -1,27 +1,22 @@
 # Recomendação de Livros
 
 ## Páginas
-- [ ] página principal
-  - [ ] fazer o input da recomendação enviar a recomendação pro BD
-  - [ ] deve ser necessário a pessoa estar cadastrada para pedir a recomendação
-  * [ ] deve ter alguma refêrencia para a página de busca, pra poder acessar ela - talvez ao inves de pedir a recomendação, aquele input sirva para acessar as recomendações que ja existem
+página principal
+- [ ] deve ter alguma refêrencia para a página de busca, pra poder acessar ela 
 
-- [ ] página de recomendação
+página cadastro
+- [ ] deve redirecionar para uma pagina dizendo que o usuário está cadastrado
+- [ ] poder entrar usando o username 
 
-- [ ] página de cadastro
-
-  * [X] deve ter uma forma de verificar se o email é válido tipo @gmail.com ou @outlook.com
-  * [ ] deve redirecionar para uma pagina dizendo que o usuário está cadastrado
-  * [ ] não está salvando username !!! importante
-
-- [ ] página do perfil
-  * [ ] deve ter todas as recomendações que o usuário deu e as recomendações que ele pediu
-  * [ ] ter as avaliações do livros ?
+página do perfil
+- [ ] ter as avaliações do livros
+- [ ] aparecer uma pagina dos seguidores
   
-- [ ] página de busca
-  * [ ] a busca deve retornar todoas as recomendaações que tiverem as palavras escritas na busca, busca pela pessoa cadastrada e recomendações dos livros
-- [ ] página estilo twitter
-  * [ ] exibir todas os pedidos de recomendação mais recentes
+página de busca
+- [ ] a busca deve retornar todoas as recomendaações que tiverem as palavras escritas na busca, busca pela pessoa cadastrada e recomendações dos livros ( página estilo twitter)
+- [ ] exibir todas os pedidos de recomendação mais recentes
+
+
 ## Fazer funcionar no linux:
 
 - ```pip3 install virtualenv```
