@@ -30,6 +30,12 @@ class User(UserMixin, db.Model):
         following_count = Follow.query.filter_by(follower_id=self.id).count()
         return following_count
 
+    def is_following(self, user):
+            return Follow.query.filter_by(follower_id=self.id, followed_id=user.id).first() is not None
+
+    def get_following_ids(self):
+        following_ids = db.session.query(Follow.followed_id).filter_by(follower_id=self.id).all()
+        return [id for (id,) in following_ids]
 
 class Post(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key = True)

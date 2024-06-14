@@ -170,7 +170,7 @@ def get_user_image(user_id):
     user = User.query.get_or_404(user_id)
     if not user.image:
         # Se o usuário não tiver uma imagem, retorne uma imagem padrão ou uma mensagem de erro
-        return send_file('caminho_para_imagem_padrao.jpg')  # Substitua pelo caminho da sua imagem padrão
+        return send_file('static/img/foto.png')
     return send_file(BytesIO(user.image), mimetype='image/jpeg')
 
 @auth.route('/follow/<int:user_id>', methods=['POST'])
@@ -182,14 +182,14 @@ def follow(user_id):
     follow = Follow(follower_id=current_user.id, followed_id=followed_user.id)
     db.session.add(follow)
     db.session.commit()
-    return '', 204
+    return redirect(url_for('main.profile', username=followed_user.username))
 
-# @auth.route('/unfollow/<int:user_id>', methods=['POST'])
-# @login_required
-# def unfollow_user(user_id):
-#     followed_user = User.query.get_or_404(user_id)
-#     follow = Follow.query.filter_by(follower_id=current_user.id, followed_id=followed_user.id).first()
-#     if follow:
-#         db.session.delete(follow)
-#         db.session.commit()
-#     return '', 204
+@auth.route('/unfollow/<int:user_id>', methods=['POST'])
+@login_required
+def unfollow(user_id):
+    followed_user = User.query.get_or_404(user_id)
+    follow = Follow.query.filter_by(follower_id=current_user.id, followed_id=followed_user.id).first()
+    if follow:
+        db.session.delete(follow)
+        db.session.commit()
+    return '', 204
