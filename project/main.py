@@ -12,14 +12,12 @@ main = Blueprint('main', __name__)
 def index():
     return render_template("index.html")
 
-
 @main.route('/profile/<username>')
-# @login_required
+@login_required
 def profile(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = Post.query.filter_by(user_id=user.id).order_by(Post.timestamp.desc()).all()   
     ratings = Rating.query.filter_by(user_id=user.id)
-    
 
     for rating in ratings:
         book_details = search_in_google_books(rating.book_id)
@@ -30,16 +28,12 @@ def profile(username):
 
 @main.route('/stream')
 def stream():
-    page = request.args.get('page', 1, type=int)  # Pega o número da página da consulta de URL, padrão para 1
-
-    filter_type = request.args.get('filter', 'all')  # Pega o parâmetro de consulta 'filter'
-
+    filter_type = request.args.get('filter', 'all')  
     if filter_type == 'following':
         following_ids = current_user.get_following_ids()
-        posts = Post.query.filter(Post.user_id.in_(following_ids)).order_by(Post.timestamp.desc()).paginate(page=page, per_page=10)
+        posts = Post.query.filter(Post.user_id.in_(following_ids)).order_by(Post.timestamp.desc())
     else:
-        posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=POSTS_PER_PAGE )
-
+        posts = Post.query.order_by(Post.timestamp.desc())
     return render_template('stream.html', posts=posts, filter_type=filter_type)
 
 @main.route('/search')
@@ -58,10 +52,9 @@ def search_in_google_books(query):
         for item in books:
             book_info = item.get('volumeInfo', {})
             title = book_info.get('title')
-            authors = ', '.join(book_info.get('authors', []))
             thumbnail = book_info.get('imageLinks', {}).get('thumbnail', '')
             book_id = item.get('id')
-            results.append({'title': title, 'authors': authors, 'thumbnail': thumbnail, 'book_id': book_id})
+            results.append({'title': title, 'thumbnail': thumbnail, 'book_id': book_id})
         return results
     return []
 
@@ -77,7 +70,6 @@ def search_books():
     return render_template('books.html', query=query, api_results=api_results)
 
 
-
 @main.route('/book/<book_id>', methods=['GET', 'POST'])
 def book_details(book_id):
 
@@ -90,9 +82,9 @@ def book_details(book_id):
         flash('Detalhes do livro não disponíveis.')
         return redirect(url_for('main.index'))
 
-@main.route('/add_comment', methods=['POST'])
+@main.route('/add_rating', methods=['POST'])
 @login_required
-def add_comment():
+def add_rating():
     comment_text = request.form.get('text')
     book_id = request.form.get('book_id')  
     rate = request.form.get('fb')
@@ -107,7 +99,7 @@ def add_comment():
 
     return redirect(url_for('main.book_details', book_id=book_id)) 
 
-@main.route('/del_comment/<int:rating_id>', methods=['POST'])
+@main.route('/del_rating/<int:rating_id>', methods=['POST'])
 @login_required
 def delete_rating(rating_id):
     rating = Rating.query.get_or_404(rating_id)
@@ -119,11 +111,8 @@ def delete_rating(rating_id):
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        flash(f'Ocorreu um erro ao excluir o post: {str(e)}')
-    
+        flash(f'Ocorreu um erro ao excluir o post: {str(e)}')    
     return redirect(url_for('main.profile', username=current_user.username))
-
-
 
 def get_book_details(book_id):
     url = f"https://www.googleapis.com/books/v1/volumes/{book_id}"

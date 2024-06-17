@@ -8,14 +8,23 @@ from io import BytesIO
 
 auth = Blueprint('auth', __name__)
 
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+'''
+Rota do login
+'''
 @auth.route('/login')
 def login():
     return render_template('login.html')
 
+'''
+Rota do form de login
+! retirar o remember caso não funcione
+
+'''
 @auth.route('/login', methods=['POST'])
 def login_post():
-    
-    
+        
     email = request.form['email']
     senha = request.form['senha']
 
@@ -35,10 +44,18 @@ def login_post():
     login_user(user, remember=remember)
     return redirect(url_for('main.profile', username=user.username))
 
+'''
+Rota do cadastro
+
+'''
 @auth.route('/signup')
 def signup():
     return render_template("signup.html")
 
+'''
+Rota do para deslogar
+
+'''
 @auth.route('/logout')
 @login_required
 def logout():
@@ -52,7 +69,6 @@ Cadastrar usuário no banco de dados
 ! mudar para que primeiro o usuário coloque o e-mail, pressione continuar e seja direcionado para 
 outra pagina onde ele precisará inserir as outras informações, para que a página não seja atualizada
 e ele perca todos os dados se já existir um email igual no bd.
-! mudar para que a senha seja salva com criptografia no banco de dados. OK
 ! mostrar cliente cadastrado antes de redirecionar para a página de login
 
 '''
@@ -91,11 +107,17 @@ def signup_post():
 
     return redirect(url_for('auth.login'))
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
+'''
+Função que retorna o arquivo se ele for permitido
+'''
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+'''
+Editar perfil
+'''
 @auth.route('/edit_profile', methods=['GET','POST'])
 @login_required
 def edit_profile():
@@ -132,6 +154,10 @@ def edit_profile():
             flash(f'Ocorreu um erro ao atualizar o perfil: {str(e)}')
     return redirect(url_for('main.profile', username=current_user.username))
 
+
+'''
+Postar um post 
+'''
 @auth.route('/post', methods=['GET','POST'])
 @login_required
 def post():
@@ -149,6 +175,10 @@ def post():
                 
     return redirect(url_for('main.profile', username=current_user.username))
 
+
+'''
+Deletar um post
+'''
 @auth.route('/del_post/<int:post_id>', methods=['POST'])
 @login_required
 def delete_post(post_id):
@@ -165,6 +195,10 @@ def delete_post(post_id):
     
     return redirect(url_for('main.profile', username=current_user.username))
 
+
+'''
+Função para pegar a foto do usuario do bd
+'''
 @auth.route('/user/image/<int:user_id>')
 def get_user_image(user_id):
     user = User.query.get_or_404(user_id)
@@ -173,6 +207,9 @@ def get_user_image(user_id):
         return send_file('static/img/foto.png')
     return send_file(BytesIO(user.image), mimetype='image/jpeg')
 
+'''
+Função para seguir outro usuário
+'''
 @auth.route('/follow/<int:user_id>', methods=['POST'])
 @login_required
 def follow(user_id):
@@ -184,6 +221,9 @@ def follow(user_id):
     db.session.commit()
     return redirect(url_for('main.profile', username=followed_user.username))
 
+'''
+Função para deixar de seguir outro usuário
+'''
 @auth.route('/unfollow/<int:user_id>', methods=['POST'])
 @login_required
 def unfollow(user_id):

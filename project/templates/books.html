@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block titulo %}
-Book
+Busca por Livro
 {% endblock %}
 
 {% block conteudo %}
@@ -14,9 +14,9 @@ Book
 	</form>
 
 	{% block content %}
-    <p>Resulados para "{{ query }}"</p>
     
     {% if api_results %}
+        <p>Resulados para "{{ query }}"</p>
         <ul>
             {% for item in api_results %}
             <li>
@@ -25,13 +25,10 @@ Book
                         <img src="{{ item.thumbnail }}" alt="{{ item.title }} thumbnail">
                     {% endif %}
                     {{ item.title }}
-                    {{ item.book_id }}
                 </a>                
             </li>
             {% endfor %}
         </ul>
-    {% else %}
-        <p>No results found on Google Books</p>
     {% endif %}
 {% endblock %}
 

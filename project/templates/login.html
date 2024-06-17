@@ -10,14 +10,12 @@ Login
     {% with messages = get_flashed_messages() %}
 
     <form method="POST" action="/login" id="login">
-        <h2 id="titulo-login">Faça Login</h2>
-    
+        <h2 id="titulo-login">Faça Login</h2>    
         <div class="mensagem-erro">
             {% if messages %}
-            <img id="atencao" src="{{ url_for('static',filename='img/atencao.png') }}">{{ messages[0] }}.
+                <img id="atencao" src="{{ url_for('static',filename='img/atencao.png') }}">{{ messages[0] }}.
             {% endif %}
-        </div>
-        
+        </div>        
         <div>
             <label for="email">E-mail</label>
             <input type="email" id="email" name="email" class="input-enviar" >
@@ -40,6 +38,5 @@ Login
         <p id="p-login">Novo aqui?</p>
         <button onclick="location.href='{{ url_for('auth.signup') }}'" id="criar-cadastro" >Crie sua conta</button>
     </div>
-
 </div>
 {% endblock %}
