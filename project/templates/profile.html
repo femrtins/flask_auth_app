@@ -1,7 +1,144 @@
 {% extends "base.html" %}
 
+{% block titulo %}
+Profile
+{% endblock %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static',filename='styles/style-profile.css') }}">
+{% endblock %}
+
 {% block conteudo %}
-<h1 class="title">
-  Welcome, {{ name }}!
-</h1>
+
+<div id="container">
+	<div id="profile-info">
+		{% if user.image %}
+        <img src="{{ url_for('auth.get_user_image', user_id=user.id) }}" id="profile-foto" >
+    {% else %}
+        <img src="{{ url_for('static', filename='img/foto.png') }}" id="profile-foto">
+    {% endif %}
+    <h1 id="nome">{{ user.name }}</h1>
+    <p id="bio-paragrafo">{{ user.username }}</p>
+    <p id="bio-paragrafo">{{ user.biography }}</p>
+	<a href="followers.html">Seguidores: {{user.get_num_followers()}}</a><br>
+	<a href="followed.html">Seguindo: {{user.get_num_following()}}</a>
+
+	<div id="followers" >
+		{% for u in user.get_followers() %}
+			<img src="{{ url_for('auth.get_user_image', user_id=u.id) }}">
+			<a href="{{ url_for('main.profile', username=u.username) }}">{{u.username}}</a>
+		{% endfor %}	
+	</div>
+	<div id="following" >
+		{% for u in user.get_following() %}
+			<img src="{{ url_for('auth.get_user_image', user_id=u.id) }}">
+			<a href="{{ url_for('main.profile', username=u.username) }}">{{u.username}}</a>
+		{% endfor %}	
+	</div>
+
+	{% if user != current_user %}
+		{% if not current_user.is_following(user) %}
+			<form action="{{ url_for('auth.follow', user_id=user.id) }}" method="POST">
+				<input type="hidden" name="user_id" value="{{ user.id }}">
+				<button type="submit">Seguir</button>
+			</form>
+		{% endif %}
+		{% if current_user.is_following(user) %}
+			<form action="{{ url_for('auth.unfollow', user_id=user.id) }}" method="POST">
+				<input type="hidden" name="user_id" value="{{ user.id }}">
+				<button type="submit">Deixar de seguir</button>
+			</form>
+		{% endif %}
+	{% endif %}
+
+
+	{% if user == current_user %}
+    <button id="botao-editar-perfil">Editar Perfil</button>	
+    <div id="editar-perfil">
+        <form method="POST" action="{{ url_for('auth.edit_profile') }}" enctype="multipart/form-data" id="edit-profile">
+            <div>
+                <label for="bio">Bio</label>
+                <textarea id="bio" name="bio" class="input-edit-profile" rows="4">{{ user.biography or '' }}</textarea>
+            </div>
+            <div>
+                <label for="nome">Seu nome</label>
+                <input type="text" name="nome" id="nome" class="input-edit-profile capitalizar" value="{{ user.name or '' }}">
+            </div>
+            <div>
+                <label for="username">Nome de usuário</label>
+                <input type="text" name="username" id="username" class="input-edit-profile" value="{{ user.username or '' }}">
+            </div>
+            <div>
+                <label for="photo" id="label-file">Mudar foto de perfil</label><br>
+                <input type="file" id="photo" name="photo" class="input-edit-profile">
+            </div>
+            <div class="botao-profile-div">
+                <input type="submit" value="Enviar" class="botao-profile">
+            </div>
+        </form>
+    </div>
+	{% endif %}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-message">{{ messages[0] }}</div>
+        {% endif %}
+    {% endwith %}
+	</div>
+
+	<div id="profile-page">
+		<div id="profile-recomendacoes">
+			{% if user == current_user %}
+			<form method="POST" action="{{ url_for('auth.post') }}" id="postar">
+				<textarea name="post" id="post" placeholder="Avaliação" rows="2"></textarea>
+				<button type="submit" id="botao-postar">Enviar</button>
+			</form>
+			<div class="linha"></div>
+			{% endif %}
+
+			<div id="lista">
+				{% for post in posts %}
+				<div class="post-pedido">		
+					<img src="{{ url_for('auth.get_user_image', user_id=post.author.id) }}" class="profile-foto">	
+					<a href="{{ url_for('main.profile', username=user.username) }}">{{user.username}}</a>
+					<p>{{ post.timestamp.strftime('%d de %b de %Y %H:%M') }}</p>
+					{{ post.post }}		
+					
+					{% if post.author == current_user %}
+					<form method="POST" action="{{ url_for('auth.delete_post', post_id=post.id) }}">
+						<button type="submit">Excluir</button>
+					</form>					
+					{% endif %}
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div id="profile-avaliacoes">
+			<div id="lista">
+				{% for rating in rating %}
+				<div class="post-pedido">		
+					<img src="{{ url_for('auth.get_user_image', user_id=rating.user_id) }}" class="profile-foto">	
+					<a href="{{ url_for('main.profile', username=user.username) }}">{{user.username}}</a>
+					<p>{{ rating.timestamp.strftime('%d de %b de %Y %H:%M') }}</p>
+					<p>{{ rating.text }}</p>
+					<a href="{{ url_for('main.book_details', book_id=rating.book_id) }}">{{ rating.book_title }}</a>
+					<img src="{{ rating.book_thumb }}" alt="{{ rating.book_title }} thumbnail">
+
+					
+					{% if rating.user_id == current_user.id %}
+					<form method="POST" action="{{ url_for('main.delete_rating', rating_id=rating.id) }}">
+						<button type="submit">Excluir</button>
+					</form>					
+					{% endif %}
+				</div>
+				{% endfor %}
+			</div>
+
+		</div>
+
+	</div>
+
+</div>     
+
+
 {% endblock %}

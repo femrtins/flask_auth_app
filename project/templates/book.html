@@ -1,0 +1,56 @@
+
+
+{% block titulo %}
+livro
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+{% block conteudo %}
+    <h1>{{ book.volumeInfo.title }}</h1>
+	{% if book.volumeInfo.imageLinks %}
+        <img src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt="{{ book.volumeInfo.title }} thumbnail">
+    {% endif %}
+    <p><strong>Autores:</strong> {{ book.volumeInfo.authors | join(', ') }}</p>
+    <p><strong>Data de publicação:</strong> {{ book.volumeInfo.publishedDate }}</p>
+    <p><strong>Descrição:</strong> {{ book.volumeInfo.description }}</p>    
+    <p><strong>Quantidade de páginas:</strong> {{ book.volumeInfo.pageCount }}</p>
+    <p><strong>Editora:</strong> {{ book.volumeInfo.publisher }}</p>
+    <p><strong>Categorias:</strong> {{ book.volumeInfo.categories | join(', ') }}</p>
+
+	<h2>Avaliações</h2>
+    {% for comment in comments %}
+        <div class="comment">
+            <p><strong>{{ comment.user.username }}</strong> disse:</p>
+            <p>{{ comment.text }}</p>
+			<p>{{ comment.rate }}</p>
+            <p><small>{{ comment.timestamp.strftime('%d de %b de %Y %H:%M') }}</small></p>
+
+        </div>
+    {% endfor %}
+
+	{% if current_user.is_authenticated %}
+		<form action="{{ url_for('main.add_comment', book_id=book.id) }}" method="POST">
+			<div class="form-group">
+				<input type="hidden" name="book_id" value="{{ book.id }}">
+				<label for="text">Adicionar Comentário</label>
+				<textarea name="text" id="text" class="form-control" rows="3"></textarea>
+				<div class="estrelas">
+					<label for="rate"><i class="fa"></i></label>
+					<input type="radio" class="rate" name="fb" value="" checked/>
+					<input type="radio" class="rate" name="fb" value="1"/>
+					<input type="radio" class="rate" name="fb" value="2"/>
+					<input type="radio" class="rate" name="fb" value="3"/>
+					<input type="radio" class="rate" name="fb" value="4"/>
+					<input type="radio" class="rate" name="fb" value="5"/>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">Comentar</button>
+		</form>
+	{% else %}
+		<p><a href="{{ url_for('auth.login') }}">Faça login</a> para comentar.</p>
+	{% endif %}
+
+{% endblock %}

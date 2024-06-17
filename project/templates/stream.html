@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Busca
+{% endblock %}
+
+{% block conteudo %}
+
+<main>
+	<form action="{{ url_for('main.search_posts') }}" method="GET">
+        <input type="text" name="query" placeholder="Pesquisar posts">
+        <button type="submit">Pesquisar</button>
+    </form>
+
+	<div class="tabs">
+        <a href="{{ url_for('main.stream', filter='all') }}" class="{% if filter_type == 'all' %}active{% endif %}">Timeline</a>
+        <a href="{{ url_for('main.stream', filter='following') }}" class="{% if filter_type == 'following' %}active{% endif %}">Posts de Quem Eu Sigo</a>
+    </div>
+
+	{% for post in posts %}
+		<div class="posts">	
+			<img src="{{ url_for('auth.get_user_image', user_id=post.author.id) }}">
+			<a href="{{ url_for('main.profile', username=post.author.username) }}">{{ post.author.username }}</a>
+			<p>{{ post.timestamp.strftime('%d de %b de %Y %H:%M') }}</p>
+			<p>{{ post.post }}</p>
+		</div>
+	{% endfor %}
+
+	
+
+</main>
+{% endblock %}

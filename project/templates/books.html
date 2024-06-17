@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Book
+{% endblock %}
+
+{% block conteudo %}
+
+<main>
+
+	<form action="{{ url_for('main.search_books') }}" method="GET">
+		<input type="text" name="query" placeholder="Pesquise por livros" required>
+		<button type="submit">Pesquisar</button>
+	</form>
+
+	{% block content %}
+    <p>Resulados para "{{ query }}"</p>
+    
+    {% if api_results %}
+        <ul>
+            {% for item in api_results %}
+            <li>
+                <a href="{{ url_for('main.book_details', book_id=item.book_id) }}">
+                    {% if item.thumbnail %}
+                        <img src="{{ item.thumbnail }}" alt="{{ item.title }} thumbnail">
+                    {% endif %}
+                    {{ item.title }}
+                    {{ item.book_id }}
+                </a>                
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found on Google Books</p>
+    {% endif %}
+{% endblock %}
+
+</main>
+{% endblock %}

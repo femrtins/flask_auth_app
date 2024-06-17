@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-Home
+Login
 {% endblock %}
 
 {% block conteudo %}
@@ -10,7 +10,7 @@ Home
     {% with messages = get_flashed_messages() %}
 
     <form method="POST" action="/login" id="login">
-        <h2 id="titulo-login">Login</h2>
+        <h2 id="titulo-login">Faça Login</h2>
     
         <div class="mensagem-erro">
             {% if messages %}
@@ -20,7 +20,7 @@ Home
         
         <div>
             <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" class="input-enviar">
+            <input type="email" id="email" name="email" class="input-enviar" >
         </div>
         <div>
             <label for="senha">Senha</label>

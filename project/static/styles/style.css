@@ -1,14 +1,14 @@
-
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Jost:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Open+Sans:ital,wght@0,400..800;1,400..800&family=Jost:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&display=swap');
 
 :root {
-    --main-bg-color: #f2e3d0;
-    --main-font-color: #292929;
-    --second-color: #F0C936;
+	--main-bg-color: #f2e3d0;
+    --main-font-color: #353535;
+    --second-color: #ececec;
     --third-color: #535BB0;
     --second-font-color: white;
-    --err-font: red;
+    --err-font: #b3261e;
+    --color-1: #9b9b9b34;
+    --color-2: #474747;
 }
 
 * {
@@ -40,12 +40,12 @@ main {
     height: 300px;
 }
 
-form#home{
+form#home, form#postar{
     justify-content: center;
     display: flex;
 }
 
-#recomendacao {
+#recomendacao, #post {
     background-color: white;
     width: 650px;
     height: 75px;
@@ -54,7 +54,7 @@ form#home{
     border-radius: 4px;
     padding: 12px 20px;
     outline: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); */
 }
 
 #recomendacao:focus{
@@ -62,7 +62,7 @@ form#home{
     /* box-shadow: 0 2px 6px rgba(3, 252, 219, 0.5); */
 }
 
-#botao-home {
+#botao-home, #botao-postar {
     height: 75px;
     border: none;
     border-radius: 4px;
@@ -115,6 +115,7 @@ img{
 /* Rodapé */
 
 footer{
+    position: relative;
     width: 100%;
     height: 200px;
     background-color: var(--second-color);
@@ -132,16 +133,15 @@ footer{
 /* Cadastro e Login */
 
 #cadastro, #login{
-    height: 530px;
+    height: 600px;
     width: 500px;
     margin: auto;
-    background-color: var(--third-color);
+    background-color: var(--second-font-color);
     padding: 20px;
-    margin-top: 30px;
+    margin-top: 20px;
     margin-bottom: 50px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.4);
-    color: var(--second-font-color);
+    border-radius: 20px;
+    color: var(--main-font-color);
     align-items: center;
 }
 
@@ -152,17 +152,27 @@ label{
 
 .input-enviar{
     width: 100%;
-    padding: 5px;
+    padding: 7px;
     outline: none;
-    border: none;
+    border: 2px solid var(--color-1);
     border-radius: 4px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    margin-bottom: 10px;
-    background-color: var(--main-bg-color);
+    margin-bottom: 5px;
+    transition: .1s
+    /* background-color: var(--main-bg-color); */
+}
+
+.input-enviar:focus{
+    border: 2px solid var(--third-color);
+    color: var(--third-color)
+}
+
+.input-enviar:focus label{
+    color: var(--third-color);
 }
 
 #titulo-cadastro, #titulo-login{
     padding-top: 10px;
+    font-size: 35px;
 }
 
 .botao-enviar-div{
@@ -178,16 +188,25 @@ label{
     height: 45px;
     width: 150px;
     margin: auto;
-    background-color: #F0C936;
+    background-color: var(--third-color);
     border: none;
-    border-radius: 4px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    border-radius: 30px;
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); */
+    color: var(--second-color);
     font-weight: 500;
 }
 
+.capitalizar{
+    text-transform: capitalize;
+}
+
 .link{
-    color: var(--second-color);
+    color: var(--third-color);
     text-decoration: none;
+}
+
+#ja-tem-conta{
+    margin-top: 20px;
 }
 
 #login{
@@ -199,7 +218,7 @@ label{
     height: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
-    color: var(--second-font-color);
+    color: var(--err-font);
     font-weight: 600;
 }
 
@@ -265,3 +284,162 @@ button#criar-cadastro{
     
 
 }
+
+/* Profile */
+
+#container{
+    /* background-color: aquamarine; */
+    height: 1000px;
+    width: 100%;
+    display: flex;
+    flex-wrap:  wrap;
+    justify-content: space-between;
+}
+
+#profile-info{
+    /* background-color: var(--main-font-color); */
+    height: 100%;
+    width: 250px;
+    margin-left: 40px;
+}
+
+h1#nome{
+    margin-top: 20px;
+    font-size: 22px;
+}
+
+p#bio{
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: left;
+    font-family: "Open Sans", sans-serif;
+    color: var(--color-2);
+}
+
+#profile-foto {
+    width: 250px; 
+    height: 250px;
+    border-radius: 50%; 
+    border: 2px solid var(--color-1);
+    margin: auto;
+    display: flex; 
+    justify-content: center; 
+}
+
+#profile-page{
+    /* background-color: var(--second-font-color); */
+    height: 100%;
+    width: 900px;
+    padding: 10px;
+    margin-right: 20px;
+}
+
+#profile-recomendacoes{
+    /* background-color: var(--third-color); */
+    height: 500px;
+    width: auto;
+}
+#profile-avaliacoes{
+    background-color: var(--err-font);
+    height: auto;
+    width: auto;
+}
+#editar-perfil{
+	display: none;
+}
+
+button#botao-editar-perfil{
+	width: 100%;
+    height: 40px;
+    border: solid 1px var(--third-color);
+    border-radius: 4px;
+    background-color: var(--main-bg-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.input-edit-profile{
+	width: 100%;
+    padding: 5px;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+input[type="file"] { 
+	display: none; 
+ }
+ 
+#label-file{
+	margin-top: 10px;
+	width: 100%;
+	border: 1px solid #cecece;
+	padding: 10px;
+	border-radius: 5px;
+	text-align: center;
+	cursor: pointer;
+ }
+
+.botao-profile{
+	width: 70px;
+	height: 40px;
+    border: solid 1px var(--third-color);
+    border-radius: 4px;
+    background-color: var(--main-bg-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    font-weight: 500;
+    font-size: 15px;
+ }
+
+.botao-profile-div{
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 10px;
+}
+
+#bio{
+    resize: none;
+}
+
+#bio-paragrafo{
+    width: 100%;
+    text-align: left;
+}
+
+form#postar{
+    width: 100%;
+}
+
+textarea#post{
+    width: 800px;
+    height: 75px;
+    resize: none;
+}
+
+button#botao-postar{
+    height: 75px;
+}
+
+div.linha{
+    height: 20px;
+    width: 100%;
+    border-bottom: solid 2px white;
+}
+
+div#lista{
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: var(--main-font-color);
+}
+
+div.post-pedido{
+    width: 100%;
+    height: auto;
+    background-color: #cecece;
+    padding: 10px;
+}
+
