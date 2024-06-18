@@ -3,7 +3,7 @@
 ## Fazer funcionar no linux:
 
 - ```pip3 install virtualenv```
-- ``python3 -m pip install requests```
+- ```python3 -m pip install requests```
 
 - criar a pasta do venv ```python3 -m venv auth```
 - para ativar: ```source auth/bin/activate```
