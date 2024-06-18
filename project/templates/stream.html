@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Explorar
+{% endblock %}
+
+{% block conteudo %}
+
+<main id="bloco-pesquisar">
+
+	<div id="centralizar">
+
+	<div id="main-pesquisar">
+
+		<div id="block-esquerda" >
+
+
+			<form action="{{ url_for('main.search_posts') }}" method="GET">
+				<input class="borda" type="text" name="query" placeholder="Pesquisar">
+				<button class="botao-profile" style=" width: 80px; color: var(--color-2);" type="submit">Pesquisar</button>
+			</form>
+
+			<div class="linha"></div>
+
+
+			<div class="tabs">
+
+				{% if  not current_user.is_authenticated %}
+				<a style="margin-top: -50px;" id="tab-all" class="botao-padrao active" href="{{ url_for('main.stream', filter='all') }}">Todas publicações</a>
+				{% endif %}
+
+				{% if  current_user.is_authenticated %}
+				<a id="tab-all" class="botao-padrao {% if filter_type == 'all' %}active{% endif %}" href="{{ url_for('main.stream', filter='all') }}">Todas publicações</a>
+				<a id="tab-following" class="botao-padrao {% if filter_type == 'following' %}active{% endif %}" href="{{ url_for('main.stream', filter='following') }}">Seguindo</a>
+			{% endif %}
+			</div>
+
+		</div>
+
+		<div id="block-direita">
+
+			{% for post in posts %}
+
+			<div class="post-pedido">		
+
+				<div id="bloco-post-header">
+					<div>
+						<img src="{{ url_for('auth.get_user_image', user_id=post.author.id) }}" class="profile-foto">	
+						<a href="{{ url_for('auth.profile', username=post.author.username) }}">@{{post.author.username}}</a>
+					</div>
+
+					<p>{{ post.timestamp.strftime('%d de %b de %Y %H:%M') }}</p>
+
+				</div>
+
+				<div class="bloco-post-main">
+					{{ post.post }}		
+				</div>
+			</div>
+
+			
+			{% endfor %}
+
+		</div>
+	</div>
+	</div>
+</main>
+{% endblock %}

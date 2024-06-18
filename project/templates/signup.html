@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Cadastro
+{% endblock %}
+
+{% block conteudo %}
+<div id="principal-signup">
+
+    {% with messages = get_flashed_messages() %}
+
+    <div id="bloco-signup">
+   
+    <form method="post" action="{{ url_for('auth.signup_post') }}" id="signup">
+        
+        <h2 id="titulo-cadastro">Cadastro</h2>
+
+        <div class="caixa-aviso" style="margin-bottom: 40px;">
+            {% if messages %}
+            <img id="atencao" src="{{ url_for('static',filename='img/icone.png') }}">{{ messages[0] }}
+            {% endif %}
+        </div>
+        
+        <div class="input-box">
+            <label for="nome">Seu nome</label>
+            <input type="text" name="nome" id="nome" class="input-enviar capitalizar" required>
+        </div>
+
+        <div class="input-box">
+            <label for="user_name">Nome de usuário</label>
+            <input type="text" name="user_name" id="user_name" class="input-enviar" required>
+        </div>
+
+        <div class="input-box">
+            <label for="email" >E-mail</label>
+            <input placeholder="nomeusuario123@gmail.com" type="email" name="email" id="email" class="input-enviar" required>
+        </div>
+
+        <div class="input-box">
+            <label for="senha" >Senha</label>
+            <input type="password" name="senha" id="senha" placeholder="Mínimo de 6 caracteres" class="input-enviar" required>
+        </div>
+
+        <div class="input-box">
+            <label for="senha_comparacao">Insira a senha mais uma vez</label>
+            <input type="password" name="senha_comparacao" id="senha_comparacao" class="input-enviar" required>
+        </div>
+        
+        <div class="botao-enviar-div">
+            <input type="submit" value="Continue" class="botao-enviar">
+        </div>
+    </form>
+    
+    {% endwith %}
+
+    <div class="signup-page">
+        <p id="p-signup">Já possui uma conta? </p>
+        <button onclick="location.href='{{ url_for('auth.login')}}'" id="criar-cadastro" >Login</button>
+    </div>
+
+</div>
+
+{% endblock %}

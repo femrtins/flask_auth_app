@@ -1,0 +1,141 @@
+@import url("profile.css");
+
+
+#bloco-pesquisar {
+    display: block;
+    position: relative;
+    margin-top: 86px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#centralizar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.botao-pesquisar{
+    width: 90px;
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    color: var(--main-font-color);
+    background-color: var(--backgroud-color);
+}
+
+#main-pesquisar {
+    display: flex;
+    justify-content: space-between; /* Ajusta o espaço entre os blocos */
+}
+
+#block-esquerda {
+    
+    display: block;
+    position: fixed;
+    width: 300px; 
+    height: auto; 
+}
+
+#block-esquerda form {
+    display: flex;
+    flex-direction: column;
+    height: 120px;
+    justify-content: space-around;
+}
+
+#block-direita {
+    display: block;
+    margin-left: 330px; /* Espaço para o bloco esquerdo */
+    flex: 1;
+    overflow-y: auto; /* Permite a rolagem vertical */
+    padding-left: 20px; /* Espaçamento à esquerda */
+}
+
+
+.borda{
+
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    color: var(--main-font-color);
+
+    font-size: 15px;
+    padding: 10px;
+    width: 100%;
+}
+
+
+.post-pedido{
+    width: 450px !important;
+}
+
+.borda:focus{
+    border-color: var(--color-3);
+}
+
+.botao-padrao{
+    padding: 15px;
+    text-align: center;
+}
+
+.tabs{
+    display: flex;
+    flex-direction: column;
+    height: 120px;
+    justify-content: space-around;
+}
+
+.tabs a{
+    text-decoration: none;
+    color: var(--main-font-color);
+    width: 300px;
+}
+
+.linha{
+    margin: 25px 0;
+}
+
+.botao-padrao{
+    width: 100% !important;
+}
+
+
+@media screen and (max-width: 820px) {
+
+    #main-pesquisar{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        margin: 0;
+        padding: 0;
+        width: 100%;
+
+        margin-top: 86px;
+
+    }
+
+    #bloco-pesquisar{
+        margin: 0;
+    }
+
+    #block-esquerda{
+        position: relative;
+
+        max-width: 90%;
+        margin-bottom: 30px;
+        
+    }
+
+    #block-direita{
+
+        max-width: 90%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .post-pedido{
+        max-width: 100%;
+    }
+}

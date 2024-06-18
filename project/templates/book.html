@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+
+{% block titulo %}
+{{ book.volumeInfo.title }}
+{% endblock %}
+
+{% block links %}
+{% endblock %}
+
+{% block conteudo %}
+
+<main id="main-livro">
+
+<h1 class="titulo-cadastro titulo-livro">{{ book.volumeInfo.title }}</h1>
+
+<div class="centralizar-livro">
+
+
+	<div class="bloco-livro">
+		
+		<div class="bloco1">
+
+			{% if book.volumeInfo.imageLinks %}
+				<img src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt="{{ book.volumeInfo.title }}">
+			{% endif %}
+		</div>
+
+		<table class="bloco2">
+			
+			<tbody>
+
+				<tr>
+					<td>Autores</td>
+					<td>{{ book.volumeInfo.authors | join(', ') }}</td>
+				</tr>
+
+				<tr>
+					<td>Data de publicação</td>
+					<td>{{ book.volumeInfo.publishedDate }}</td>
+				</tr>
+
+				<tr>
+					<td>Descrição</td>
+					<td>{{ book.volumeInfo.description }}</td>
+				</tr>
+
+				<tr>
+					<td>Quantidade de páginas </td>
+					<td>{{ book.volumeInfo.pageCount }}</td>
+				</tr>
+
+				<tr>
+					<td>Editora </td>
+					<td> {{ book.volumeInfo.publisher }}</td>
+				</tr>
+
+				<tr>
+					<td>Categorias</td>
+					<td>{{ book.volumeInfo.categories | join(', ') }}</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+	</div>
+</div>
+
+<h2 class="titulo-cadastro">Comentários</h2>
+<div class="bloco-avaliacao">
+	<div class="bloco3">
+	
+
+	{% if current_user.is_authenticated %}
+		<form action="{{ url_for('main.add_rating', book_id=book.id) }}" method="POST">
+			<div class="form-group">
+				<input type="hidden" name="book_id" value="{{ book.id }}">
+				<label for="text">Adicionar Comentário</label>
+				<textarea name="text" id="text" class="post" rows="3"></textarea>
+			</div>
+			<button type="submit" class="botao-profile" style="width: 100px;">Comentar</button>
+		</form>
+	{% else %}
+	{% endif %}
+
+	</div>
+
+	<div class="avaliacoes bloco4">
+
+		{% for comment in comments %}
+			<div class="comment">
+				<div class="bloco-post-header">
+					<div>
+						<img src="{{ url_for('auth.get_user_image', user_id=comment.user.id) }}" class="profile-foto">
+						<a href="{{ url_for('auth.profile', username=comment.user.username) }}">@{{comment.user.username}}</a>
+					</div>
+					<p><small>{{ comment.timestamp.strftime('%d de %b de %Y %H:%M') }}</small></p>
+				</div>
+
+				<div class="bloco-comment-main">
+
+					<p>{{ comment.text }}</p>
+
+				</div>
+			</div>
+		{% endfor %}
+
+		{% if comments==[]%}
+		<div style="width: 350px;"></div>
+		{% endif %}
+	</div>
+
+
+</div>
+
+</main>
+{% endblock %}
+
+
+
