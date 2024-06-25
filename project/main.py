@@ -28,10 +28,17 @@ def profile(username):
 
     return render_template('profile.html', user=user, posts=posts, ratings=ratings)
 
+'''
+Rota para a página inicial
+'''
 @main.route('/')
 def index():
     return render_template("index.html")
 
+"""
+Rota para a página de explorar
+Contém todas as postagens e avaliações
+"""
 @main.route('/stream')
 def stream():
 
@@ -59,6 +66,9 @@ def stream():
     return render_template('stream.html', posts=posts, filter_type=filter_type, ratings=ratings)
 
 
+"""
+Função que retorna os resultados da pesquisa da página de explorar
+"""
 @main.route('/search_posts', methods=['GET'])
 def search_posts():
     query = request.args.get('query')
@@ -88,19 +98,33 @@ def search_posts():
     return render_template('stream.html', query=query, posts=results1, ratings = results2)
 
 
-
+"""
+Rota para a página que contém os seguidores do usuário está seguindo
+"""
 
 @main.route('/seguindo/<username>')
 def get_seguindo(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('seguindo.html', user=user)
 
+"""
+Rota para a página que contém os seguidores do usuário
+"""
 @main.route('/seguidores/<username>')
 def get_seguidores(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('seguidores.html', user=user)
 
 
+"""
+Função que pesquisa os livros da API google books.
+Retorna um dicionário dentro de uma lista, contendo informações sobre o livro:
+- informação do livro
+- título da obra
+- imagem da obra
+- id do livro
+
+"""
 
 def search_in_google_books(query):
     url = f"https://www.googleapis.com/books/v1/volumes?q={query}"
@@ -117,21 +141,9 @@ def search_in_google_books(query):
         return results
     return []
 
-def search_in_google_books2(query):
-    url = f"https://www.googleapis.com/books/v1/volumes/{query}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        books = response.json().get('items', [])
-        results = []
-        for item in books:
-            book_info = item.get('volumeInfo', {})
-            title = book_info.get('title')
-            thumbnail = book_info.get('imageLinks', {}).get('thumbnail', '')
-            book_id = item.get('id')
-            results.append({'title': title, 'thumbnail': thumbnail, 'book_id': book_id})
-        return results
-    return []
-
+"""
+Rota para a página dos livros.
+"""
 @main.route('/books',  methods=['GET'])
 def search_books():
     
@@ -142,7 +154,9 @@ def search_books():
 
     return render_template('books.html', query=query, api_results=api_results)
 
-
+"""
+Rota para a página individual de cada livro
+"""
 @main.route('/book/<book_id>', methods=['GET', 'POST'])
 def book_details(book_id):
 
@@ -157,6 +171,10 @@ def book_details(book_id):
         flash('Detalhes do livro não disponíveis.')
         return redirect(url_for('main.index'))
 
+
+""""
+Função que adiciona uma postagem com avaliação da obra (rating) no banco de dados.
+"""
 @main.route('/add_rating', methods=['POST'])
 @login_required
 def add_rating():
@@ -177,6 +195,10 @@ def add_rating():
 
     return redirect(url_for('main.book_details', book_id=book_id)) 
 
+
+"""
+Função que deleta uma postagem com avaliação da obra (rating) no banco de dados
+"""
 @main.route('/del_rating/<int:rating_id>', methods=['POST'])
 @login_required
 def delete_rating(rating_id):
@@ -192,6 +214,9 @@ def delete_rating(rating_id):
         flash(f'Ocorreu um erro ao excluir o post: {str(e)}')    
     return redirect(url_for('main.profile', username=current_user.username))
 
+"""
+Função que retorna informações sobre um livro específico da api.
+"""
 def get_book_details(book_id):
     url = f"https://www.googleapis.com/books/v1/volumes/{book_id}"
     response = requests.get(url)
@@ -201,7 +226,9 @@ def get_book_details(book_id):
             return book
     return None
 
-
+"""
+Função que edita uma postagem com avaliação da obra (rating) no banco de dados.
+"""
 @main.route('/edit_rating/<int:rating_id>', methods=['GET','POST'])
 @login_required
 def edit_rating(rating_id):
@@ -234,4 +261,3 @@ def edit_rating(rating_id):
             flash(f'Ocorreu um erro ao atualizar o post: {str(e)}') 
             
         return redirect(url_for('main.profile', username=current_user.username))
-    
