@@ -1,5 +1,8 @@
 # Recomendação de Livros
 
+- Fernanda Ribeiro Martins
+- Monique Ellen dos Santos
+
 ## Fazer funcionar no linux:
 
 - ```pip3 install virtualenv```
