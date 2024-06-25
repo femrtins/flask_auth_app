@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Editar perfil
+{% endblock %}
+
+{% block conteudo %}
+
+<main class="main-following">
+
+    <div class="bloco-centralizar">
+
+        <h3>Editar perfil</h3>
+        
+        <div  id="editar-perfil">
+            <form method="POST" action="{{ url_for('auth.edit_profile') }}" enctype="multipart/form-data" id="edit-profile">
+                <div>
+                    <label for="bio">Bio</label>
+                    <textarea id="bio" name="bio" class="input-edit-profile" rows="4">{{ user.biography or '' }}</textarea>
+                </div>
+                <div>
+                    <label for="nome">Seu nome</label>
+                    <input type="text" name="nome" id="nome" class="input-edit-profile capitalizar" value="{{ user.name or '' }}">
+                </div>
+                <div>
+                    <label for="username">Nome de usuário</label>
+                    <input type="text" name="username" id="username" class="input-edit-profile" value="{{ user.username or '' }}">
+                </div>
+                <div style="margin: 15px;">
+                    <label for="photo" id="label-file">Mudar foto de perfil</label><br>
+                    <input type="file" id="photo" name="photo" class="input-edit-profile">
+                </div>
+                <div class="botao-profile-div">
+                    <input type="submit" value="Enviar" class="botao-profile">
+                </div>
+            </form>
+        
+        </div>
+    
+        
+    </div>
+
+    <form  method="POST" action="{{ url_for('auth.del_user', user_id = current_user.id) }}">
+        <button  id="botao-excluir" class="botao-enviar" type="submit">Excluir Perfil</button>	
+    </form>
+
+</main>
+{% endblock %}

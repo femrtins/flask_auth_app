@@ -16,7 +16,7 @@ Seguidores
 
         {% for u in user.get_followers() %}
 
-                    <div class="perfil-followers" onclick="irPara('{{ url_for('auth.profile', username=u.username) }}')">
+                    <div class="perfil-followers" onclick="irPara('{{ url_for('main.profile', username=u.username) }}')">
 
                         <div style="display: flex; height: 28px;">
 
@@ -24,7 +24,7 @@ Seguidores
                             <p style="padding-left: 5px;">{{u.name}}</p>
                         </div>
 
-                        <a href="{{ url_for('auth.profile', username=u.username) }}">@{{u.username}}</a>
+                        <a href="{{ url_for('main.profile', username=u.username) }}">@{{u.username}}</a>
                         <p>{{u.bio}}</p>
                     </div>
 

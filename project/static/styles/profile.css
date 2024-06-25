@@ -68,17 +68,31 @@ p#bio{
     background-color: var(--err-font);
     height: auto;
     width: auto;
+    display: none;
 }
 #editar-perfil{
-	display: none;
-    margin-bottom: 20px;
-
     height: auto;
+}
+
+#botao-excluir{
+    margin: 10px 0;
+    background-color: #af3434;
 }
 
 button#botao-editar-perfil{
 	width: 100%;
-    height: 40px;
+    min-height: 40px;
+    border: solid 1px var(--border-color);
+    border-radius: 4px;
+    background-color: var(--backgroud-color);
+    font-weight: 500;
+    font-size: 15px;    
+    margin-top: 25px;    
+}
+
+.botao-editar{
+    width: 100%;
+    min-height: 40px;
     border: solid 1px var(--border-color);
     border-radius: 4px;
     background-color: var(--backgroud-color);
@@ -90,21 +104,21 @@ button#botao-editar-perfil{
 }
 
 
-button#botao-editar-perfil:hover{
+button.botao-editar:hover{
     background-color: var(--backgroud2-color);
 }
 
 #editar-perfil{
     width: 100%;
-    border: solid 1px var(--border-color);
-    border-radius: 4px;
-    padding: 10px;
+  
+    padding: 0px;
 }
 
 #edit-profile label{
     color: var(--font-black);
     padding-left: 3px;
     font-weight: 550;
+    display: inline;
 }
 
 #edit-profile label:hover{
@@ -133,11 +147,10 @@ input[type="file"] {
  
 #label-file{
 	margin-top: 10px;
-	width: 100%;
 	border: 1px solid #cecece;
 	padding: 10px;
 	border-radius: 5px;
-	text-align: center;
+	text-align: left;
 	cursor: pointer;
  }
 
@@ -160,7 +173,7 @@ input[type="file"] {
 .botao-profile-div{
 	display: flex;
 	justify-content: flex-end;
-	margin-top: 10px;
+	margin:10px 0;
 }
 
 #bio{
@@ -225,9 +238,6 @@ div.linha {
     margin-top: 20px;
 }
 
-div#lista{
-    margin-top: 50px;
-}
 
 #lista .post-pedido{
     width: 100% !important;
@@ -267,7 +277,7 @@ div.post-pedido{
 }
 
 .bloco-post-main{
-    margin: 40px 0;
+    margin: 20px 0;
     padding-left: 10px;
 }
 
@@ -311,7 +321,6 @@ div.post-pedido{
     display: none;
     width: 100%;
     margin-right: 2px;
-
 }
 
 
@@ -324,14 +333,13 @@ div.post-pedido{
 
     #profile-page{
         width: 60vw;
-        margin-top: 35px;
     }
 
 
     .bloco-post-header{
         flex-direction: column;
         justify-content: flex-start;
-        flex-direction: column-reverse;
+        margin-left: 10px;
 
     }
     .bloco-post-header p{
@@ -377,23 +385,25 @@ div.post-pedido{
 .bloco-book{
     display: flex;
     flex-direction: row;
-    margin: 30px 0;
+    margin: 15px 0;
 }
+
 
 .bloco-livro-img{
     display: flex;
     flex-direction: column;;
 
     width: auto;
-    max-width: 150px;
-
-    padding-left: 20px;
-    padding-right: 20px;
+    max-width: 140px;
     color: var(--color-2);
 
-
+    align-items: center;
     cursor: pointer;
 
+}
+
+.bloco-livro-img a{
+    text-align: center;
 }
 
 .bloco-livro-img img:hover{

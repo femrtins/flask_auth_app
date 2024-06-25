@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100), nullable=False)    
     biography = db.Column(db.String(155))
     image = db.Column(LargeBinary, nullable=True)
-    posts = db.relationship('Post', backref='author', lazy=True)
+    posts = db.relationship('Post', backref='author', lazy=True, cascade = "all, delete-orphan")
 
     def get_followers(self):
         followers = User.query.join(Follow, Follow.follower_id == User.id).filter(Follow.followed_id == self.id).all()
@@ -60,7 +60,7 @@ class Rating(db.Model):
     book_id = db.Column(db.String(100), nullable=False)  # ID do livro da API do Google Books
     text = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now)
-    rate = db.Column(db.String(1), nullable=True)
+    rate = db.Column(db.Integer, nullable=False)
 
-    user = db.relationship('User', backref=db.backref('comments', lazy=True))
+    user = db.relationship('User', backref=db.backref('comments', lazy=True, cascade = "all, delete-orphan"))
 

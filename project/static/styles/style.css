@@ -17,6 +17,9 @@
     --font-grey: #536471;
 }
 
+.index-main{
+    padding: 10px;
+}
 * {
     font-family: "Manrope", sans-serif;
     font-optical-sizing: auto;
@@ -73,22 +76,9 @@ h2{
 }
 
 
-/* Rodapé */
-/* 
-footer{
-    position: relative;
-    width: 100%;
-    height: 200px;
-    background-color: var(--second-color);
-    padding: 40px;
-
+@media screen and (max-width: 570px){
+    
+    .index-main h2{
+        font-size: 30px;
+    }
 }
-
-
-.txt-footer{
-    font-family: "EB Garamond", serif;
-    position: relative;
-    top: 40px;
-    margin: auto;
-    text-align: center;
-} */

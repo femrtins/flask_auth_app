@@ -7,27 +7,18 @@ from datetime import datetime
 from io import BytesIO
 from .models import User, Post, Rating
 import requests
-from .main import *
 
 auth = Blueprint('auth', __name__)
 
-'''
-Função para entrar no perfil da pessoa
-'''
-@auth.route('/profile/<username>')
-def profile(username):
-    user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user).order_by(Post.id.desc()).all()
-    ratings = Rating.query.filter_by(user_id=user.id)
 
-    for rating in ratings:
-        book_details = search_in_google_books(rating.book_id)
-        rating.book_title = book_details[0]['title']
-        rating.book_thumb= book_details[0]['thumbnail']
+@auth.route('/del_user/<int:user_id>', methods=['POST'])
+def del_user(user_id):
 
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
 
-    return render_template('profile.html', user=user, posts=posts, ratings=ratings)
-
+    db.session.commit()
+    return redirect(url_for('auth.login'))
 
 '''
 Rota do form de login
@@ -71,7 +62,7 @@ def login_post():
     # Se os anteriores passarem manda o usuário para o seu perfil
     login_user(user, remember=remember)
 
-    return redirect(url_for('auth.profile', username=user.username))
+    return redirect(url_for('main.profile', username=user.username))
 
 
 
@@ -156,6 +147,9 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+@auth.route('/editar')
+def editar():
+    return render_template('editar.html', user = current_user)
 
 '''
 Editar perfil
@@ -175,7 +169,7 @@ def edit_profile():
         # Verifica se o novo email não pertence a outro usuário
         if username != current_user.username and User.query.filter_by(username=username).first():
             flash('Esse nome de usuário já está em uso.')
-            return redirect(url_for('auth.profile'))
+            return redirect(url_for('main.profile'))
 
         # Atualiza as informações do usuário
         if bio:
@@ -195,7 +189,7 @@ def edit_profile():
         except Exception as e:
             db.session.rollback()
             flash(f'Ocorreu um erro ao atualizar o perfil: {str(e)}')
-    return redirect(url_for('auth.profile', username=current_user.username))
+    return redirect(url_for('main.profile', username=current_user.username))
 
 
 
@@ -217,7 +211,7 @@ def post():
                 db.session.rollback()
                 flash(f'Ocorreu um erro ao criar o post: {str(e)}')
                 
-    return redirect(url_for('auth.profile', username=current_user.username))
+    return redirect(url_for('main.profile', username=current_user.username))
 
 
 
@@ -232,7 +226,7 @@ def edit_post(post_id):
     # Verifica se o usuário atual é o autor do post
     if post.author != current_user:
         flash('Você não tem permissão para editar este post.')
-        return redirect(url_for('auth.profile', username=current_user.username))
+        return redirect(url_for('main.profile', username=current_user.username))
 
     if request.method == 'POST':
         edited_post = request.form.get('edited-post')
@@ -248,7 +242,7 @@ def edit_post(post_id):
             db.session.rollback()
             flash(f'Ocorreu um erro ao atualizar o post: {str(e)}')
 
-        return redirect(url_for('auth.profile', username=current_user.username))
+        return redirect(url_for('main.profile', username=current_user.username))
 
     # Renderiza o template de edição de post
     return render_template('edit_post.html', post=post)
@@ -264,7 +258,7 @@ def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     if post.author != current_user:
         flash('Você não tem permissão para excluir este post.')
-        return redirect(url_for('auth.profile', username=current_user.username))  
+        return redirect(url_for('main.profile', username=current_user.username))  
     try:
         db.session.delete(post)
         db.session.commit()
@@ -272,7 +266,7 @@ def delete_post(post_id):
         db.session.rollback()
         flash(f'Ocorreu um erro ao excluir o post: {str(e)}')
     
-    return redirect(url_for('auth.profile', username=current_user.username))
+    return redirect(url_for('main.profile', username=current_user.username))
 
 
 
@@ -301,7 +295,7 @@ def follow(user_id):
     follow = Follow(follower_id=current_user.id, followed_id=followed_user.id)
     db.session.add(follow)
     db.session.commit()
-    return redirect(url_for('auth.profile', username=followed_user.username))
+    return redirect(url_for('main.profile', username=followed_user.username))
 
 
 '''
@@ -315,5 +309,5 @@ def unfollow(user_id):
     if follow:
         db.session.delete(follow)
         db.session.commit()
-        return redirect(url_for('auth.profile', username=followed_user.username))
+        return redirect(url_for('main.profile', username=followed_user.username))
     return '', 204

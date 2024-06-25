@@ -1,9 +1,25 @@
 # Recomendação de Livros
 
+## Páginas
+página principal
+- [ ] deve ter alguma refêrencia para a página de busca, pra poder acessar ela 
+
+página cadastro
+- [ ] deve redirecionar para uma pagina dizendo que o usuário está cadastrado
+- [ ] poder entrar usando o username 
+
+página do perfil
+- [ ] ter as avaliações do livros
+- [ ] aparecer uma pagina dos seguidores
+  
+página de busca
+- [ ] a busca deve retornar todoas as recomendaações que tiverem as palavras escritas na busca, busca pela pessoa cadastrada e recomendações dos livros ( página estilo twitter)
+- [ ] exibir todas os pedidos de recomendação mais recentes
+
+
 ## Fazer funcionar no linux:
 
 - ```pip3 install virtualenv```
-- ```python3 -m pip install requests```
 
 - criar a pasta do venv ```python3 -m venv auth```
 - para ativar: ```source auth/bin/activate```

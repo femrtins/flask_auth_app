@@ -1,20 +1,3 @@
-// ao clicar em editar perfil: caixa de edição surge
-document.getElementById('botao-editar-perfil').addEventListener('click', function() {
-    var conteudo = document.getElementById('editar-perfil');
-    if (conteudo.style.display === 'none' || conteudo.style.display === '') {
-        conteudo.style.display = 'block';
-    } else {
-        conteudo.style.display = 'none';
-    }
-});
-
-// mudar fundo do botao da search page
-
-function apareceDiv(int){
-
-    var div = document.getElementById();
-}
-
 // Ao clica no botao editar
 document.addEventListener('DOMContentLoaded', function() {
     var editarButtons = document.querySelectorAll('.editar-post');
@@ -39,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // mensagem do flash desaparece em 3 segundos
 window.onload = function() {
     var flashMessage = document.getElementById('flash-message');
+
     if (flashMessage) {
         flashMessage.style.display = 'block';
         setTimeout(function() {

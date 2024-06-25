@@ -52,7 +52,7 @@
                             <a class="nav-link" id="navbar-entrar" href="{{ url_for('main.stream', filter='all') }}">Explorar</a>
                             <a class="nav-link" id="navbar-entrar" href="{{ url_for('main.search_books')}}">Livros</a>
 
-                            <a class="nav-link" id="navbar-sair" href="{{ url_for('auth.profile', username=current_user.username)}}">Perfil</a>
+                            <a class="nav-link" id="navbar-sair" href="{{ url_for('main.profile', username=current_user.username)}}">Perfil</a>
                             <a class="nav-link" id="navbar-sair" href="{{ url_for('auth.logout') }}">Sair</a>
                             {% endif %}
 

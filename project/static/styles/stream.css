@@ -81,14 +81,14 @@
 .tabs{
     display: flex;
     flex-direction: column;
-    height: 120px;
-    justify-content: space-around;
+    height: auto;
 }
 
 .tabs a{
     text-decoration: none;
     color: var(--main-font-color);
     width: 300px;
+    margin-bottom: 5px;
 }
 
 .linha{
