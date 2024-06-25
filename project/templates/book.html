@@ -22,7 +22,7 @@
 		<div class="bloco1">
 
 			{% if book.volumeInfo.imageLinks %}
-				<img src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt="{{ book.volumeInfo.title }}">
+				<img alt="Capa do livro" src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt="{{ book.volumeInfo.title }}">
 			{% endif %}
 		</div>
 
@@ -107,7 +107,7 @@
 			<div class="comment">
 				<div class="bloco-post-header">
 					<div>
-						<img src="{{ url_for('auth.get_user_image', user_id=comment.user.id) }}" class="profile-foto">
+						<img alt="Foto de perfil" src="{{ url_for('auth.get_user_image', user_id=comment.user.id) }}" class="profile-foto">
 						<a href="{{ url_for('main.profile', username=comment.user.username) }}">@{{comment.user.username}}</a>
 					</div>
 					<p><small>{{ comment.timestamp.strftime('%d de %b de %Y %H:%M') }}</small></p>

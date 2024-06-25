@@ -50,18 +50,21 @@ def stream():
 
     if filter_type == 'following':
         following_ids = current_user.get_following_ids()
+
         posts = Post.query.filter(Post.user_id.in_(following_ids)).order_by(Post.timestamp.desc()).paginate(page=page, per_page=10)
+        ratings = Rating.query.filter(Rating.user_id.in_(following_ids)).order_by(Rating.timestamp.desc()).paginate(page=page, per_page=POSTS_PER_PAGE )
+
     elif filter_type =='outro':
         ratings = Rating.query.order_by(Rating.timestamp.desc()).paginate(page=page, per_page=POSTS_PER_PAGE )
 
-        for rating in ratings:
+    else:
+        posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=POSTS_PER_PAGE )
+
+    for rating in ratings:
             book_details = get_book_details(rating.book_id)
             volume_info = book_details.get('volumeInfo', {})
             rating.book_title = volume_info.get('title', 'Título não disponível')
             rating.book_thumb = volume_info.get('imageLinks', {}).get('thumbnail')
-    else:
-        posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=POSTS_PER_PAGE )
-
     
     return render_template('stream.html', posts=posts, filter_type=filter_type, ratings=ratings)
 

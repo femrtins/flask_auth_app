@@ -30,7 +30,8 @@
                 <div class="container-fluid">
 
                     <div class="navbar-nav">
-                        <a style="background-color: var(--backgroud-color);" class="nav-link active" aria-current="page" href="{{ url_for('main.index') }}"><img src="{{ url_for('static',filename='img/bookshelf.png') }}" id="icone" alt=""></a>
+                        <a style="background-color: var(--backgroud-color);" class="nav-link active" aria-current="page" href="{{ url_for('main.index') }}">
+                            <img alt="Bookshelf"  src="{{ url_for('static',filename='img/bookshelf.png') }}" id="icone" alt=""></a>
                     </div>
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +67,7 @@
 
                 {% if request.path.startswith('/signup') or request.path.startswith('/login') %}
                 <div id="navbar-toggler2">
-                    <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static',filename='img/bookshelf.png') }}" alt=""></a>
+                    <a href="{{ url_for('main.index') }}"><img alt="Bookshelf" src="{{ url_for('static',filename='img/bookshelf.png') }}" alt=""></a>
                 </div>
 
                 {% endif %}

@@ -18,10 +18,10 @@
 
 		<div id="bloco-foto">
 			{% if user.image %}
-			<img src="{{ url_for('auth.get_user_image', user_id=user.id) }}" id="profile-foto" >
+			<img alt="Foto de perfil" src="{{ url_for('auth.get_user_image', user_id=user.id) }}" id="profile-foto" >
 
 			{% else %}
-				<img src="{{ url_for('static', filename='img/foto.png') }}" id="profile-foto">
+				<img alt="Sem foto de perfil" src="{{ url_for('static', filename='img/foto.png') }}" id="profile-foto">
 			{% endif %}
 		</div>
 
@@ -100,7 +100,7 @@
 					<div class="bloco-post-header">
 
 						<div>
-							<img src="{{ url_for('auth.get_user_image', user_id=post.author.id) }}" class="profile-foto">	
+							<img alt="Foto de perfil" src="{{ url_for('auth.get_user_image', user_id=post.author.id) }}" class="profile-foto">	
 							<a href="{{ url_for('main.profile', username=user.username) }}">@{{user.username}}</a>
 						</div>
 
@@ -150,7 +150,7 @@
 						<div class="bloco-post-header">	
 
 							<div>
-								<img src="{{ url_for('auth.get_user_image', user_id=rating.user_id) }}" class="profile-foto">	
+								<img alt="Foto de perfil"  src="{{ url_for('auth.get_user_image', user_id=rating.user_id) }}" class="profile-foto">	
 								<a href="{{ url_for('main.profile', username=user.username) }}">@{{user.username}}</a>
 							</div>
 
@@ -163,7 +163,7 @@
 							<div style="min-width: 140px; padding-left: 5px;" >
 
 								<div class="bloco-livro-img" onclick="irPara('{{ url_for('main.book_details', book_id=rating.book_id) }}')">
-									<img src="{{ rating.book_thumb }}" alt="{{ rating.book_title }}">
+									<img  alt="Capa do livro" src="{{ rating.book_thumb }}" alt="{{ rating.book_title }}">
 									<a  href="{{ url_for('main.book_details', book_id=rating.book_id) }}">{{ rating.book_title }}</a>
 								</div>
 								
