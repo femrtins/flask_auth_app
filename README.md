@@ -26,7 +26,7 @@ Este é um projeto de desenvolvimento web utilizando o framework Flask, que simu
 - Python 3.8 ou superior
 - pip (gerenciador de pacotes Python)
 
-## 🚀 Como rodar o projeto localmente
+## Como rodar o projeto localmente
 
 ### 1. Clone o repositório
 
