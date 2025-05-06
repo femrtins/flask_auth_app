@@ -67,7 +67,7 @@ Acesse o app em `http://127.0.0.1:5000`.
 ## Estrutura do Projeto
 
 ```
-rede-social-livros/
+rede_social_livros/
 ├── app/
 │   ├── templates/
 │   ├── static/
